@@ -27,6 +27,8 @@ bot.on('message', async (msg) => {
 Result: Returns latest gas prices`)
     .addField('**$alert**', `Usage: $alert @user #gwei __OR__ $alert me #gwei
 Result: Sets an alert for a mentioned user or current user at set gwei`)
+    .addField('**$showalerts**', `Usage: $showalerts
+Result: Shows a list of all active alerts`)
     .addField('**$joke**', `Usage: $joke
 Result: Returns hilarious jokes`)
     .addField('**$clear**', `Usage: $clear #number
@@ -34,7 +36,7 @@ Result: Clears #number+1 past messages`)
     .addField('**Note:**', `1. Price is in gwei not Gwei.
 2. Can't set #gwei in $alert under 50 or over 500 gwei.
 3. Can't set #gwei in decimal value, it will be converted to closest floor value.
-4. $alert alerts users when the **average** ETH gas price reaches set gwei.
+4. $alert alerts users when the **average** ETH gas price reaches set gwei every 5 seconds.
 5. The bot will alert with two separate messages with mentions to grab your attention to the channel.`)
     .setFooter('Commands must be used Exactly as described above | v0.1', bot.user.displayAvatarURL())
     .setAuthor(bot.user.username, bot.user.displayAvatarURL())
@@ -132,16 +134,15 @@ Result: Clears #number+1 past messages`)
 
   if(command == 'showalerts') {
     let embed = new Discord.MessageEmbed()
-    .setTitle('📜 Remaining alerts')
+    .setTitle('📜 Active alerts 📜')
     .setDescription('')
-    .setFooter('')
+    .setFooter('Users will be pinged twice when average transaction rate goes under gwei above.')
     .setAuthor(bot.user.username, bot.user.displayAvatarURL())
     .setColor('')
 
     for(let gwei of alerts.keys()) {
       let userArray = alerts.get(gwei)
       let user = await bot.users.cache.get(`${userArray[0]}`)
-      console.log(user)
       let userString = `${user.username}`
 
       for(let i=1; i < userArray.length; i++) {
