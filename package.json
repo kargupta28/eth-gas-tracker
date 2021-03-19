@@ -1,0 +1,24 @@
+{
+  "name": "eth-gas-tracker",
+  "version": "1.0.0",
+  "description": "Ethereum gas price tracker",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/kargupta28/eth-gas-tracker.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kargupta28/eth-gas-tracker/issues"
+  },
+  "homepage": "https://github.com/kargupta28/eth-gas-tracker#readme",
+  "dependencies": {
+    "discord.js": "^12.5.1",
+    "dotenv": "^8.2.0"
+  }
+}
