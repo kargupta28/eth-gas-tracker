@@ -52,11 +52,6 @@ Result: Clears #number+1 past messages`)
 
     msg.channel.bulkDelete(size)
     return msg.channel.send(`Deleted ${args[0]} posts. Shhhh.`)
-
-    // Delete messages from specific user
-    // check bot.GuildMember.roles()
-    //const user = msg.mentions.users.first()
-    //const msgList = msg.channel.message.fetch({limit: 100})
   }
 
   if(command === 'joke') {
@@ -133,6 +128,31 @@ Result: Clears #number+1 past messages`)
     alerts.set(gwei, newUsers)
 
     return msg.reply(`You will be alerted when ETH Gas price reaches ${args[1]} gwei!`)
+  }
+
+  if(command == 'showalerts') {
+    let embed = new Discord.MessageEmbed()
+    .setTitle('📜 Remaining alerts')
+    .setDescription('')
+    .setFooter('')
+    .setAuthor(bot.user.username, bot.user.displayAvatarURL())
+    .setColor('')
+
+    for(let gwei of alerts.keys()) {
+      let userArray = alerts.get(gwei)
+      let user = await bot.users.cache.get(`${userArray[0]}`)
+      console.log(user)
+      let userString = `${user.username}`
+
+      for(let i=1; i < userArray.length; i++) {
+        user = await bot.users.cache.get(`${userArray[i]}`)
+        userString += `, ${user.username}`
+      }
+
+      embed.addField(gwei, userString)
+    }
+
+    msg.reply(embed)
   }
 
 }) 
